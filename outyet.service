@@ -1,0 +1,13 @@
+[Unit]
+Description=outyet service
+After=network.target
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=1
+ExecStart=/home/outyet/go/bin/outyet
+User=outyet
+
+[Install]
+WantedBy=multi-user.target

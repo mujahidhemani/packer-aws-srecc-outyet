@@ -1,0 +1,42 @@
+- hosts: all
+  become: yes
+  tasks:
+    - name: Install packages
+      yum:
+        name: "{{ packages }}"
+      vars:
+        packages:
+        - wget
+        - git
+    
+    - name: create outyet service user
+      user:
+        name: outyet
+        shell: /usr/sbin/nologin
+
+    - name: Download golang
+      unarchive:
+        src: https://dl.google.com/go/go1.13.4.linux-amd64.tar.gz
+        dest: /usr/local
+        remote_src: yes
+
+    - name: Install outyet binary
+      command: go get github.com/golang/example/outyet
+      environment:
+        PATH: /usr/local/go/bin:{{ ansible_env.PATH }}
+      become_user: outyet
+
+    - name: Install outyet service unit file
+      copy:
+        src: outyet.service
+        dest: /etc/systemd/system
+
+    - name: Enable outyet service
+      systemd:
+        name: outyet
+        enabled: yes
+        daemon_reload: yes
+
+
+
+
