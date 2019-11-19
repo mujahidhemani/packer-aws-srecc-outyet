@@ -4,7 +4,7 @@ This is the Packer build for the outyet AMI. It uses an Ansible playbook to conf
 
 ## Build
 1. Ensure your AWS CLI is configured and Packer is installed
-2. `packer.io build outyet-ami.json`
+2. `packer build outyet-ami.json`
 
 ## Test
  
